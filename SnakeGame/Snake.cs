@@ -1,10 +1,4 @@
 ﻿using SnakeGame.Enum;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace SnakeGame
 {
@@ -13,29 +7,28 @@ namespace SnakeGame
         DirectionEnum direction;
         public Snake()
         {
-            points = new List<Point>();
+            _points = new List<Point>();
         }
 
-        public Snake CreateSnake(int length, Point snakeTail, DirectionEnum direction)//Singelton
+        public void CreateSnake(int length, Point snakeTail, DirectionEnum direction)//Singelton
         {
             this.direction = direction;
             for (int i = 0; i < length; i++)
             {
                 Point point = new Point(snakeTail);
                 point.SetDirection(i, direction);
-                points.Add(point);
+                _points.Add(point);
             }
-            return new Snake();
         }
 
         public void Move()
         {
-            Point tail = points.First();
-            points.Remove(tail);
+            Point tail = _points.First();
+            _points.Remove(tail);
 
-            Point head = new Point(points.Last());
+            Point head = new Point(_points.Last());
             head.SetDirection(1, direction);
-            points.Add(head);
+            _points.Add(head);
 
             tail.ClearPoint();
             head.DrawPoint();
@@ -61,14 +54,25 @@ namespace SnakeGame
         }
         public bool Eat(Point food)
         {
-            Point head = new Point(points.Last());
+            Point head = new Point(_points.Last());
             head.SetDirection(1, direction);
 
             if (head.ComparePoints(food))
             {
                 food.Symbol = head.Symbol;
-                points.Add(food);
+                _points.Add(food);
                 return true;
+            }
+            return false;
+        }
+
+        public bool CollisionWithOwnTail()
+        {
+            Point head = _points.Last();
+            for (int i = 0; i < _points.Count - 1; i++)
+            {
+                if (head.ComparePoints(_points[i]))
+                    return true;
             }
             return false;
         }

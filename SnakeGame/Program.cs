@@ -1,8 +1,4 @@
-﻿using SnakeGame.Factory;
-using SnakeGame.Helpers;
-using SnakeGame.Installers;
-using SnakeGame.Lines;
-using System.Text;
+﻿using SnakeGame.UI;
 
 namespace SnakeGame
 {
@@ -10,39 +6,25 @@ namespace SnakeGame
     {
         static void Main(string[] args)
         {
-            // Console.SetWindowSize(120, 30);
+            UIService uIService = new UIService();
+            Menu menu = uIService.GetMenu();
+            while (true)
+            {
+                uIService.GetCommand(menu, Console.ReadKey().Key);
+            }
+                // Console.SetWindowSize(120, 30);
             // Console.SetBufferSize(120, 30);
-            LineInstaller line = new LineInstaller();
-            line.DrawShapes();
+            //Menu menu = new Menu( new Dictionary<int, string> {
+            //    { 0,"Start" },
+            //    { 1,"Exit"}
+            //});
+            //while (true)
+            //{
+            //    menu.DisplayMenu();
+            //    ConsoleKeyInfo key = Console.ReadKey();
+            //    menu.PressKey(key.Key);
+            //}
 
-            Point food = FoodFactory.GetRandomFood(119,20,'*');
-            Console.ForegroundColor = ColorHelper.GetRandomColor(new Random().Next(1,6));
-            food.DrawPoint();
-            Console.ResetColor();
-
-            Snake snake = new Snake();
-            snake.CreateSnake(5, new Point(5, 5, 'z'), Enum.DirectionEnum.Right);
-            snake.DrawLine();
-
-            while(true)
-            { 
-                if(snake.Eat(food))
-                {
-                    food = FoodFactory.GetRandomFood(119, 20, '*');
-                    Console.ForegroundColor = ColorHelper.GetRandomColor(new Random().Next(1, 6));
-                    food.DrawPoint();
-                    Console.ResetColor();
-                }
-
-                snake.Move();
-                Thread.Sleep(200);
-
-                if(Console.KeyAvailable)
-                {
-                    ConsoleKeyInfo key = Console.ReadKey();
-                    snake.PressKey(key.Key);
-                }
-            }            
         }
     }
 }

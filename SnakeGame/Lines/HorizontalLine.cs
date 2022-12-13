@@ -10,11 +10,11 @@ namespace SnakeGame.Lines
     {
         public HorizontalLine(int left, int top, char symbol, int count)
         {
-            this.points = new List<Point>();
+            _points = new List<Point>();
             for (int i = left; i < count; i++)
             {
                 Point point = new Point(i,top,symbol);
-                this.points.Add(point);
+                _points.Add(point);
             }
         }
     }
