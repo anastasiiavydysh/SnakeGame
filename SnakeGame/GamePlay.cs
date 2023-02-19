@@ -6,7 +6,6 @@ using static System.Formats.Asn1.AsnWriter;
 
 namespace SnakeGame
 {
-   // private UserService _userServices = new UserService();
     public class GamePlay
     {
         public GamePlay(){}

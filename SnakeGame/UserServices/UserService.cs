@@ -71,10 +71,5 @@ namespace SnakeGame.UserServices
             Console.WriteLine("Press Backspace to back");
             return user;
         }
-
-        //public void SaveScore(User user)
-        //{
-        //    user.Score = score;
-        //}
     }
 }
